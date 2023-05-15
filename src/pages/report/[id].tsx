@@ -50,17 +50,18 @@ const columns: ColumnsType<DataType> = [
   },
   {
     title: "Total Classes",
-    dataIndex: "attendanceCount",
-    key: "attendanceCount",
+    dataIndex: "totalClasses",
+    key: "totalClasses",
     render: (_, record) => <p>{record.totalClasses}</p>,
   },
   {
-    title: "Download Record",
-    key: "downloadRecord",
+    title: "See Student's Report",
+    dataIndex: "studentReport",
+    key: "studentReport",
     render: (_, record) => (
-      <a href={getDownloadUrl(record.attendanceId)} className="bg-[#1677ff] text-white px-3 rounded-lg py-2">
-        Download Record
-      </a>
+      <Link href={"../student/" + record.studentId} className="bg-[#1677ff] text-white px-3 rounded-lg py-2">
+        Report
+      </Link>
     ),
   },
 ];
@@ -108,7 +109,12 @@ const Report = () => {
           {attendance ? attendance.classYear : ""}-{attendance ? attendance.classDivision : ""} {attendance ? attendance.classSubject : ""}
         </title>
       </Head>
-      <Table pagination={false} rowKey="studentId" columns={columns} dataSource={report} />
+      <div className="mt-10">
+        <a href={getDownloadUrl(id)} className="bg-[#1677ff] text-white px-3 rounded-lg p-2 mt-10">
+          Download Record
+        </a>
+        <Table pagination={false} rowKey="studentId" columns={columns} dataSource={report} className="mt-10" />
+      </div>
     </div>
   );
 };
